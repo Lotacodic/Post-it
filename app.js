@@ -1,10 +1,11 @@
-const express = require("express");
+ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const authRouter = require("./routes/auth");
+const postRouter = require("./routes/posts");
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(helmet());
 app.use(morgan("common"));
 
 app.use("/api/auth", authRouter);
+app.use("/api/posts", postRouter);
 
 // port = process.env.MONGODB_URI || 3000;
 app.listen(3000, () => {
