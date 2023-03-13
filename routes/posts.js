@@ -1,9 +1,9 @@
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
 const Post = require("../models/Post");
 const User = require("../models/user");
 
 // Create new Post
-
 router.post("/", async (req, res) => {
   const newPost = new Post(req.body);
   try {
@@ -17,23 +17,21 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update a post
-router.put("/:id", async (req, res) => {
-  try {
+// Update post
+router.put("/:id", async(req, res) => {
+  const {userId, postit} = req.body
+  try{
     const post = await Post.findById(req.params.id);
     if (post.userId === req.body.userId) {
-      await post.updateOne({ $set: req.body }, { new: true });
-      res.status(200).json({
-        message: "Your post has been updated!",
-        data: post,
-      });
+      await Post.findByIdAndUpdate(req.params.id, req.body);
+      res.status(200).json("The post has been updated!")
     } else {
-      res.status(403).json("You can only update your post");
-    }
-  } catch (err) {
+      res.status(403).json("You can update only your post!");
+    } 
+  } catch(err) {
     res.status(500).json(err);
   }
-});
+})
 
 // Delete a post
 router.delete("/:id", async (req, res) => {
