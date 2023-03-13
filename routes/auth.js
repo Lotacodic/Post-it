@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { generateRandomAvatar } = require("./avatar");
 
 //REGISTER
 router.post("/create", async (req, res) => {
@@ -8,12 +9,13 @@ router.post("/create", async (req, res) => {
     // Generate new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
+    const { image } = await generateRandomAvatar(req.body.email)
     // Create new user
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
-      password: hashedPassword,
+      avatar:image,
+      password: hashedPassword
     });
 
     // Save user and respond
