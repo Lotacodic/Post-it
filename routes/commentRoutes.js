@@ -8,7 +8,7 @@ const {
 const verifyToken = require("../middlewares/authMiddleware");
 const { verifyCommentOwnership } = require("../middlewares/ownershipMiddleware");
 
-router.post("/", verifyToken, createComment);
+router.post("/:postId", verifyToken, createComment);
 router.get("/:postId", getPostComments);
 router.put("/:id", verifyToken, verifyCommentOwnership, updateComment);
 router.delete("/:id", verifyToken, verifyCommentOwnership, deleteComment);

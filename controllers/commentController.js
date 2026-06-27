@@ -4,7 +4,7 @@ const Comment = require("../models/Comment");
 const createComment = async (req, res, next) => {
   try {
     const newComment = new Comment({
-      postId: req.body.postId,
+     postId: req.params.postId,
       userId: req.user.id,
       text: req.body.text,
     });
