@@ -1,10 +1,18 @@
 const Comment = require("../models/Comment");
 
 // CREATE COMMENT
+// CREATE COMMENT
 const createComment = async (req, res, next) => {
   try {
+    const Post = require("../models/Post");
+
+    const post = await Post.findOne({ _id: req.params.postId, isDeleted: false });
+    if (!post) {
+      return res.status(404).json({ message: "Post not found." });
+    }
+
     const newComment = new Comment({
-     postId: req.params.postId,
+      postId: req.params.postId,
       userId: req.user.id,
       text: req.body.text,
     });
