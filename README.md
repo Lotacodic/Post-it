@@ -141,7 +141,7 @@ erDiagram
 
 ## API Documentation
 
-**Base URL:** `https://your-app.railway.app` (replace with your Railway deployment URL)
+**Base URL:** `https://post-it-production-14d0.up.railway.app`
 
 Protected routes require a Bearer token in the `Authorization` header:
 
